@@ -48,6 +48,6 @@ async def on_guild_join(guild):
 
     print(f"Finished setup. Created {created_count} channels in {guild.name}.")
 
-# استبدل 'YOUR_BOT_TOKEN' بتوكن بوت الخاص بك
-bot.run("YOUR_BOT_TOKEN")
+# استبدل 'YOUR_BOT_TOKEN' بتوكن بوت الخاص بك)
+bot.run(os.getenv("TOKEN"))
 
